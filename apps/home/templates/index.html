@@ -1,27 +1,46 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html>
     <head>
+        {% tailwind_css %}
     </head>
 
     <body>
-        <h1>Hello World!</h1>
-        <p>Welcome to my first Django project!</p>
+        <nav class="flex justify-between items-center">
+            <div class="">
+                <a href="/">Home</a>
+            </div>
 
-        <nav>
-            <ul>
-                <li>
-                    <a href="/journal">Journal</a>
-                </li>
-                <li>
-                    <a href="/nutrition">Nutrition</a>
-                </li>
-                <li>
-                    <a href="/shop">Shop</a>
-                </li>
-                <li>
-                    <a href="/tools">Tools</a>
-                </li>
-            </ul>
+            <div class="">
+                <ul class="flex items-center gap-[4vw]">
+                    <li>
+                        <a href="/fitness">Fitness</a>
+                    </li>
+                    <li>
+                        <a href="/nutrition">Nutrition</a>
+                    </li>
+                    <li>
+                        <a href="/tools">Tools</a>
+                    </li>
+                    <li>
+                        <a href="/shop">Shop</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="">
+                <a href="/login">
+                    <button type="button" class="btn px-2 py-2">Log In</button>
+                </a>
+                <a href="/signup">
+                    <button type="button" class="btn px-2 py-2">Sign Up</button>
+                </a>
+            </div>
+
         </nav>
+
+        Welcome to my first Django project!
+
     </body>
 </html>
