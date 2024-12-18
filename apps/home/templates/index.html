@@ -1,24 +1,18 @@
-{% load static tailwind_tags %}
-
 <!DOCTYPE html>
 <html>
     <head>
-        {% tailwind_css %}
     </head>
 
     <body>
-        <nav class="flex justify-between items-center">
-            <div class="">
+        <nav>
+            <div>
                 <a href="/">Home</a>
             </div>
 
-            <div class="">
-                <ul class="flex items-center gap-[4vw]">
+            <div>
+                <ul>
                     <li>
-                        <a href="/fitness">Fitness</a>
-                    </li>
-                    <li>
-                        <a href="/nutrition">Nutrition</a>
+                        <a href="/cultivation">Cultivation</a>
                     </li>
                     <li>
                         <a href="/tools">Tools</a>
@@ -29,12 +23,12 @@
                 </ul>
             </div>
 
-            <div class="">
+            <div>
                 <a href="/login">
-                    <button type="button" class="btn px-2 py-2">Log In</button>
+                    <button type="button">Log In</button>
                 </a>
                 <a href="/signup">
-                    <button type="button" class="btn px-2 py-2">Sign Up</button>
+                    <button type="button">Sign Up</button>
                 </a>
             </div>
 
@@ -44,3 +38,4 @@
 
     </body>
 </html>
+
