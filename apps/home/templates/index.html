@@ -1,24 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
+        <title>fsweb</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     </head>
 
     <body>
-        <nav>
+        <main style="max-width: 800px; margin:auto">
+            Welcome to my first Django project!
             <div>
                 <a href="/">Home</a>
             </div>
 
             <div>
+                Tools
                 <ul>
                     <li>
-                        <a href="/cultivation">Cultivation</a>
-                    </li>
-                    <li>
-                        <a href="/tools">Tools</a>
-                    </li>
-                    <li>
-                        <a href="/shop">Shop</a>
+                        <a href="/hangboard_timer">Hangboard Timer</a>
                     </li>
                 </ul>
             </div>
@@ -31,11 +30,7 @@
                     <button type="button">Sign Up</button>
                 </a>
             </div>
-
-        </nav>
-
-        Welcome to my first Django project!
-
+        </main>
     </body>
 </html>
 

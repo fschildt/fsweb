@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include("apps.home.urls")),
     path('cultivation/', include("apps.cultivation.urls")),
     path('shop/', include("apps.shop.urls")),
-    path('tools/', include("apps.tools.urls")),
+    path('hangboard_timer/', include("apps.hangboard_timer.urls")),
 ]
