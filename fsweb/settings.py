@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',
-    'apps.cultivation',
-    'apps.shop',
+    'apps.fitness_tracker',
     'apps.hangboard_timer',
 ]
 
