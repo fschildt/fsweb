@@ -2,16 +2,52 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Hangboard Timer</title>
+        <title>Fitness Tracker</title>
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     </head>
 
     <body>
         <main>
             Fitness Tracker
-        </main>
 
-        <script src="{% static 'hangboard_timer/HangboardTimer.js' %}"></script>
+            <form action="{% url 'fitness-tracker:index' %}" method="post">
+                {% csrf_token %}
+                <label for="exercise-input">Exercise</label>
+                <input id="exercise-input" name="exercise" type="search" list="exercise-list" autocomplete="on">
+                <br><br>
+
+                <label for"weight-input">Weight (kg)</label>
+                <input id="weight-input" name="weight" type="number" min="0" max="999" step="any">
+                <br><br>
+
+                <label for"reps-input">Repetitions</label>
+                <input id="reps-input" name="reps" type="number" min="0" max="99999">
+                <br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+
+            <h2>Submitted Workouts</h2>
+            <table>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Weight</th>
+                    <th>Repetitions</th>
+                </tr>
+                {% for workout in workouts %}
+                <tr>
+                    <td>{{ workout.exercise }}</td>
+                    <td>{{ workout.weight }}</td>
+                    <td>{{ workout.reps }}</td>
+                </tr>
+                {% endfor %}
+            </table> 
+
+            <datalist id="exercise-list">
+                <option value="Push-Up">
+                <option value="Pull-Up">
+            </datalist>
+        </main>
     </body>
 
 </html>
