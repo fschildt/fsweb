@@ -4,6 +4,9 @@ from django.db import models
 class Muscle(models.Model):
     name = models.CharField(max_length=64)
 
+    class Meta:
+        db_table = "muscles"
+
     def __str__(self):
         return self.name
 
@@ -12,31 +15,33 @@ class StrengthExercise(models.Model):
     name = models.CharField(max_length=64)
     muscles_worked = models.ManyToManyField('Muscle', through='StrengthExerciseNxNMuscle')
 
+    class Meta:
+        db_table = "strength_exercises"
+
     def __str__(self):
         return self.name
 
 
 class StrengthExerciseNxNMuscle(models.Model):
-    exercise = models.ForeignKey(StrengthExercise, on_delete=models.CASCADE)
-    muscle = models.ForeignKey(Muscle, on_delete=models.CASCADE)
+    exercise = models.ForeignKey('StrengthExercise', on_delete=models.CASCADE)
+    muscle = models.ForeignKey('Muscle', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "strength_exercises_nxn_muscles"
+
+    def __str__(self):
+        return f"{self.exercise}, {self.muscle}"
 
 
-class StrengthWorkout(models.Model):
+class StrengthExerciseEvent(models.Model):
     date = models.DateField()
-
-    def __str__(self):
-        return f"Workout on {self.date}"
-
-
-class StrengthExerciseWorkout(models.Model):
-    workout = models.ForeignKey(StrengthWorkout, on_delete=models.CASCADE, related_name='exercises')
-    exercise = models.ForeignKey(StrengthExercise, on_delete=models.CASCADE)
+    exercise = models.ForeignKey('StrengthExercise', on_delete=models.CASCADE)
     weight = models.PositiveIntegerField()
-    repetitions = models.PositiveIntegerField()
+    reps = models.PositiveIntegerField()
+
+    class Meta:
+        db_table = "strength_exercise_events"
 
     def __str__(self):
-        return f"workout = {self.workout}, exercise = {self.exercise.name}, weight = {self.weight}, reps = {self.repetitions}"
-
-
-
+        return f"{self.date}, {self.exercise}, {self.weight}, {self.reps}"
 

@@ -5,10 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
-django-tailwind = "*"
-django-browser-reload = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "*"

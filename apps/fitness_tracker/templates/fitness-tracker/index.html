@@ -43,6 +43,10 @@
                 {% endfor %}
             </table> 
 
+            {% if post_error %}
+            <h3>{{ post_error }}</h3>
+            {% endif %}
+
             <datalist id="exercise-list">
                 <option value="Push-Up">
                 <option value="Pull-Up">
