@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+:root {
+    --bg-default: #2e2e2e;
+    --bg-action: #923737;
+    --bg-pause: #416e46;
+}
+
+body {
+    background-color: var(--bg-default);
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    color: #e8e6e3;
+    transition: background-color 0.3s ease;
+}
+

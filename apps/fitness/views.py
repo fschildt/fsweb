@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django import forms
+from django.template import loader
 
 from .models import StrengthExerciseEvent
 from .models import StrengthExercise
@@ -12,6 +13,10 @@ class WorkoutForm(forms.Form):
     exercise = forms.CharField(max_length=100)
     weight = forms.DecimalField(max_value=1000, decimal_places=2)
     reps = forms.IntegerField(max_value=10000)
+
+def hangboard_timer(request):
+    template = loader.get_template('fitness/hangboard-timer.html')
+    return HttpResponse(template.render())
 
 def index(request):
     post_error = None
@@ -34,4 +39,4 @@ def index(request):
     strength_exercise_events = StrengthExerciseEvent.objects.all()
 
     context = {'workouts': strength_exercise_events, 'post_error': post_error}
-    return render(request, 'fitness-tracker/index.html', context)
+    return render(request, 'fitness/index.html', context)

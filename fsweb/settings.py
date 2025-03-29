@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',
-    'apps.fitness_tracker',
-    'apps.hangboard_timer',
+    'apps.accounts',
+    'apps.fitness',
 ]
 
 MIDDLEWARE = [

@@ -8,9 +8,14 @@
 
     <body>
         <main>
+            <a href="{% url 'fitness:hangboard_timer' %}">Hangboard Timer</a>
+            <br>
+            <br>
+
+
             Fitness Tracker
 
-            <form action="{% url 'fitness-tracker:index' %}" method="post">
+            <form action="{% url 'fitness:index' %}" method="post">
                 {% csrf_token %}
                 <label for="exercise-input">Exercise</label>
                 <input id="exercise-input" name="exercise" type="search" list="exercise-list" autocomplete="on">

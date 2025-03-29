@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('date', models.DateField()),
                 ('weight', models.PositiveIntegerField()),
                 ('reps', models.PositiveIntegerField()),
-                ('exercise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness_tracker.strengthexercises')),
+                ('exercise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness.strengthexercises')),
             ],
             options={
                 'db_table': 'strength_exercise_events',
@@ -49,8 +49,8 @@ class Migration(migrations.Migration):
             name='StrengthExercisesNxNMuscles',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('exercise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness_tracker.strengthexercises')),
-                ('muscle', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness_tracker.muscles')),
+                ('exercise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness.strengthexercises')),
+                ('muscle', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness.muscles')),
             ],
             options={
                 'db_table': 'strength_exercises_nxn_muscles',
@@ -59,6 +59,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='strengthexercises',
             name='muscles_worked',
-            field=models.ManyToManyField(through='fitness_tracker.StrengthExercisesNxNMuscles', to='fitness_tracker.muscles'),
+            field=models.ManyToManyField(through='fitness.StrengthExercisesNxNMuscles', to='fitness.muscles'),
         ),
     ]
