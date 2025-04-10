@@ -1,5 +1,4 @@
-from django.template import loader
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
@@ -7,6 +6,13 @@ def index(request):
         username = request.POST["username"]
         password = request.POST["password"]
 
-    template = loader.get_template('index.html')
-    return HttpResponse(template.render())
+    context = {}
+
+    user = request.user
+    if user.is_authenticated:
+        context['username'] = user.username
+    else:
+        context['username'] = None
+
+    return render(request, 'index.html', context)
 

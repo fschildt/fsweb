@@ -4,19 +4,23 @@
     <head>
         <title>Register</title>
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'accounts/Login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'accounts/login.css' %}">
     </head>
 
     <body>
         <main>
             Create account.<br>
-            <form method="post">
-                <input name='username'  type="text" placeholder="username"><br>
-                <input name='password1' type="text" placeholder="password"><br>
-                <input name='password2' type="text" placeholder="password confirmation"><br>
-                <input name='email'     type="text" placeholder="email (optional)"><br>
+            <form method="post">{% csrf_token %}
+                <input name="username"  type="text" placeholder="username"><br>
+                <input name="password1" type="text" placeholder="password"><br>
+                <input name="password2" type="text" placeholder="password confirmation"><br>
+                <input name="email"     type="text" placeholder="email (optional)"><br>
                 <button type="submit">Register</button>
             </form>
+            <br>
+            {{ form.errors }}
+            <br>
+            <a href="/accounts/login">Go to Login</a>
         </main>
     </body>
 </html>

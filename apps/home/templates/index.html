@@ -28,7 +28,15 @@
             </nav>
         </header>
         <main>
-            Welcome to my website!
+            Welcome to my website!<br><br>
+
+            {% if username %}
+            Logged in as: {{ username }}
+            <form action="/accounts/logout/" method="POST">{% csrf_token %}
+                <input type="submit" value="Log out">
+            </form>
+            <br>
+            {% endif %}
         </main>
     </body>
 </html>

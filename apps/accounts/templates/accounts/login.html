@@ -4,13 +4,13 @@
     <head>
         <title>Login</title>
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'accounts/Login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'accounts/login.css' %}">
     </head>
 
     <body>
         <main>
             Log in.
-            <form method="post">
+            <form method="post">{% csrf_token %}
                 <input name="username" type="text" placeholder="username"><br>
                 <input name="password" type="text" placeholder="password"><br>
                 <button type="submit">Log In</button>

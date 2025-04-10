@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import settings
 
 
 class Muscle(models.Model):
@@ -34,8 +35,9 @@ class StrengthExerciseNxNMuscle(models.Model):
 
 
 class StrengthExerciseEvent(models.Model):
-    date = models.DateField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     exercise = models.ForeignKey('StrengthExercise', on_delete=models.CASCADE)
+    date = models.DateField()
     weight = models.PositiveIntegerField()
     reps = models.PositiveIntegerField()
 
