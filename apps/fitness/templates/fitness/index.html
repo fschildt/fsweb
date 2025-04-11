@@ -32,7 +32,12 @@
                 <input type="submit" value="Submit">
             </form>
 
-            <h2>Submitted Workouts</h2>
+            {% if post_error %}
+            <h3>{{ post_error }}</h3>
+            {% endif %}
+
+
+            <h2>Summary</h2>
             <table>
                 <tr>
                     <th>Exercise</th>
@@ -47,10 +52,6 @@
                 </tr>
                 {% endfor %}
             </table> 
-
-            {% if post_error %}
-            <h3>{{ post_error }}</h3>
-            {% endif %}
 
             <datalist id="exercise-list">
                 {% for exercise_name in exercise_names %}
