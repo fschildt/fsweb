@@ -53,8 +53,9 @@
             {% endif %}
 
             <datalist id="exercise-list">
-                <option value="Push-Up">
-                <option value="Pull-Up">
+                {% for exercise_name in exercise_names %}
+                <option value="{{ exercise_name }}">
+                {% endfor %}
             </datalist>
         </main>
     </body>

@@ -9,7 +9,6 @@ from .models import StrengthExerciseEvent
 from .models import StrengthExercise
 
 
-
 class WorkoutForm(forms.Form):
     exercise = forms.CharField(max_length=100)
     weight = forms.DecimalField(max_value=1000, decimal_places=2)
@@ -21,6 +20,8 @@ def hangboard_timer(request):
 
 def index(request):
     post_error = None
+
+    exercise_names = StrengthExercise.objects.values_list('name', flat=True)
 
     if request.method == "POST":
         posted_form = WorkoutForm(request.POST)
@@ -41,5 +42,5 @@ def index(request):
 
     strength_exercise_events = StrengthExerciseEvent.objects.all()
 
-    context = {'workouts': strength_exercise_events, 'post_error': post_error}
+    context = {'workouts': strength_exercise_events, 'post_error': post_error, 'exercise_names': exercise_names}
     return render(request, 'fitness/index.html', context)
