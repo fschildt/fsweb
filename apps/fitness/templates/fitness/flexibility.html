@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flexibility - fsweb</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    </head>
+
+    <body>
+        <main>
+            <h2>{{ date|date:"Y-m-d" }}</h2>
+            <form action="{% url 'fitness:flexibility' %}" method="post">
+                {% csrf_token %}
+                <label for="exercise-input">Exercise</label>
+                <input id="exercise-input" name="exercise" type="search" list="exercise-list" autocomplete="on">
+                <br><br>
+
+                <label for"duration-input">Duration</label>
+                <input id="duration-input" name="duration" type="text">
+                <br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+
+            <h2>Summary</h2>
+            <table>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Duration</th>
+                </tr>
+                {% for workout in workouts %}
+                <tr>
+                    <td>{{ workout.exercise.name }}</td>
+                    <td>{{ workout.duration }}</td>
+                </tr>
+                {% endfor %}
+            </table> 
+
+            <datalist id="exercise-list">
+                {% for exercise_name in exercise_names %}
+                <option value="{{ exercise_name }}">
+                {% endfor %}
+            </datalist>
+        </main>
+    </body>
+</html>

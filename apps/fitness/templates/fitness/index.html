@@ -8,60 +8,12 @@
 
     <body>
         <main>
+            <a href="{% url 'fitness:strength' %}">Strength</a><br>
+            <a href="{% url 'fitness:cardio' %}">Cardio</a><br>
+            <a href="{% url 'fitness:flexibility' %}">Flexibility</a><br>
+            <br>
+            <br>
             <a href="{% url 'fitness:hangboard_timer' %}">Hangboard Timer</a>
-            <br>
-            <br>
-
-
-            Fitness Tracker
-
-            <form action="{% url 'fitness:index' %}" method="post">
-                {% csrf_token %}
-                <label for="exercise-input">Exercise</label>
-                <input id="exercise-input" name="exercise" type="search" list="exercise-list" autocomplete="on">
-                <br><br>
-
-                <label for"weight-input">Weight (kg)</label>
-                <input id="weight-input" name="weight" type="number" min="0" max="999" step="any">
-                <br><br>
-
-                <label for"reps-input">Repetitions</label>
-                <input id="reps-input" name="reps" type="number" min="0" max="99999">
-                <br><br>
-
-                <label for"sets-input">Sets</label>
-                <input id="sets-input" name="sets" type="number" min="0" max="99999">
-                <br><br>
-
-                <input type="submit" value="Submit">
-            </form>
-
-            {% if post_error %}
-            <h3>{{ post_error }}</h3>
-            {% endif %}
-
-
-            <h2>Summary {{ date|date:"Y-m-d" }}</h2>
-            <table>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Weight</th>
-                    <th>Repetitions</th>
-                </tr>
-                {% for workout in workouts %}
-                <tr>
-                    <td>{{ workout.exercise }}</td>
-                    <td>{{ workout.weight }}</td>
-                    <td>{{ workout.reps }}</td>
-                </tr>
-                {% endfor %}
-            </table> 
-
-            <datalist id="exercise-list">
-                {% for exercise_name in exercise_names %}
-                <option value="{{ exercise_name }}">
-                {% endfor %}
-            </datalist>
         </main>
     </body>
 

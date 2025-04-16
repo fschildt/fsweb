@@ -5,27 +5,39 @@ from django.template import loader
 
 from datetime import datetime
 
-from .models import StrengthExerciseEvent
-from .models import StrengthExercise
+from .models import StrengthExercise, StrengthExerciseEvent
+from .models import CardioExercise, CardioExerciseEvent
+from .models import FlexibilityExercise, FlexibilityExerciseEvent
 
 
-class WorkoutForm(forms.Form):
+class StrengthForm(forms.Form):
     exercise = forms.CharField(max_length=100)
     weight = forms.DecimalField(max_value=1000, decimal_places=2)
     reps = forms.IntegerField(max_value=10000)
     sets = forms.IntegerField(max_value=10000)
 
 
-def hangboard_timer(request):
-    template = loader.get_template('fitness/hangboard-timer.html')
-    return HttpResponse(template.render())
+class CardioForm(forms.Form):
+    exercise = forms.CharField(max_length=100)
+    duration = forms.DurationField()
 
 
-def index(request):
+class FlexibilityForm(forms.Form):
+    exercise = forms.CharField(max_length=100)
+    duration = forms.DurationField()
+
+
+
+def view_index(request):
+    context = {}
+    return render(request, 'fitness/index.html', context)
+
+
+def view_strength(request):
     context = {}
 
     if request.method == "POST":
-        posted_form = WorkoutForm(request.POST)
+        posted_form = StrengthForm(request.POST)
         if posted_form.is_valid():
             user = request.user
             date = datetime.now()
@@ -42,7 +54,7 @@ def index(request):
             else:
                 context['post_error'] = 'invalid exercise'
 
-        return redirect('fitness:index')
+        return redirect('fitness:strength')
 
 
     date = datetime.now()
@@ -52,5 +64,28 @@ def index(request):
     context['workouts'] = strength_exercise_events
     context['date'] = date
 
-    return render(request, 'fitness/index.html', context)
+    return render(request, 'fitness/strength.html', context)
+
+
+def view_cardio(request):
+    context = {}
+
+    date = datetime.now()
+    context['date'] = date
+
+    return render(request, 'fitness/cardio.html', context)
+
+
+def view_flexibility(request):
+    context = {}
+
+    date = datetime.now()
+    context['date'] = date
+
+    return render(request, 'fitness/flexibility.html', context)
+
+
+def view_hangboard_timer(request):
+    return render(request, 'fitness/hangboard-timer.html')
+
 
