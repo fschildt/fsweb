@@ -22,6 +22,8 @@ def hangboard_timer(request):
 
 
 def index(request):
+    context = {}
+
     if request.method == "POST":
         posted_form = WorkoutForm(request.POST)
         if posted_form.is_valid():
@@ -43,9 +45,12 @@ def index(request):
         return redirect('fitness:index')
 
 
+    date = datetime.now()
     exercise_names = StrengthExercise.objects.values_list('name', flat=True)
-    strength_exercise_events = StrengthExerciseEvent.objects.all()
-    context = {'exercise_names': exercise_names, 'workouts': strength_exercise_events}
+    strength_exercise_events = StrengthExerciseEvent.objects.filter(date=date)
+    context['exercise_names'] = exercise_names
+    context['workouts'] = strength_exercise_events
+    context['date'] = date
 
     return render(request, 'fitness/index.html', context)
 
