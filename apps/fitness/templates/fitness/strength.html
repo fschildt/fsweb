@@ -37,11 +37,11 @@
                     <th>Weight</th>
                     <th>Repetitions</th>
                 </tr>
-                {% for workout in workouts %}
+                {% for event in exercise_events %}
                 <tr>
-                    <td>{{ workout.exercise }}</td>
-                    <td>{{ workout.weight }}</td>
-                    <td>{{ workout.reps }}</td>
+                    <td>{{ event.exercise }}</td>
+                    <td>{{ event.weight }}</td>
+                    <td>{{ event.reps }}</td>
                 </tr>
                 {% endfor %}
             </table> 

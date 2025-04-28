@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Flexibility - fsweb</title>
+        <title>{{ title }}</title>
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     </head>
 
@@ -16,7 +16,7 @@
                 <br><br>
 
                 <label for"duration-input">Duration</label>
-                <input id="duration-input" name="duration" type="text">
+                <input id="duration-input" name="duration" type="text" pattern="^(?:(?:[0-1]\d|2[0-3]):[0-5]\d:[0-5]\d|[0-5]?\d:[0-5]\d)$">
                 <br><br>
 
                 <input type="submit" value="Submit">
@@ -28,10 +28,10 @@
                     <th>Exercise</th>
                     <th>Duration</th>
                 </tr>
-                {% for workout in workouts %}
+                {% for event in exercise_events %}
                 <tr>
-                    <td>{{ workout.exercise.name }}</td>
-                    <td>{{ workout.duration }}</td>
+                    <td>{{ event.exercise.name }}</td>
+                    <td>{{ event.duration }}</td>
                 </tr>
                 {% endfor %}
             </table> 

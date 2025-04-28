@@ -1,13 +1,12 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django import forms
-from django.template import loader
-
-from datetime import datetime
 
 from .models import StrengthExercise, StrengthExerciseEvent
 from .models import CardioExercise, CardioExerciseEvent
 from .models import FlexibilityExercise, FlexibilityExerciseEvent
+
+from datetime import datetime
+
 
 
 class StrengthForm(forms.Form):
@@ -33,59 +32,115 @@ def view_index(request):
     return render(request, 'fitness/index.html', context)
 
 
+
 def view_strength(request):
     context = {}
+    date = datetime.now()
 
-    if request.method == "POST":
-        posted_form = StrengthForm(request.POST)
-        if posted_form.is_valid():
+    if request.method == 'POST':
+        strength_form = StrengthForm(request.POST)
+        if strength_form.is_valid():
             user = request.user
-            date = datetime.now()
-            exercise = posted_form.cleaned_data['exercise']
-            weight = posted_form.cleaned_data['weight']
-            reps = posted_form.cleaned_data['reps']
-            sets = posted_form.cleaned_data['sets']
+            exercise = strength_form.cleaned_data['exercise']
+            weight = strength_form.cleaned_data['weight']
+            reps = strength_form.cleaned_data['reps']
+            sets = strength_form.cleaned_data['sets']
 
             strength_exercise_id = StrengthExercise.objects.filter(name=exercise).first()
             if strength_exercise_id:
-                for i in range(sets):
-                    strength_exercise_event = StrengthExerciseEvent(user=user, exercise=strength_exercise_id, date=datetime.now(), weight=weight, reps=reps)
+                for _ in range(sets):
+                    strength_exercise_event = StrengthExerciseEvent(user=user, exercise=strength_exercise_id, date=date, weight=weight, reps=reps)
                     strength_exercise_event.save()
             else:
                 context['post_error'] = 'invalid exercise'
+        else:
+            print('unhandled error')
 
         return redirect('fitness:strength')
 
 
-    date = datetime.now()
-    exercise_names = StrengthExercise.objects.values_list('name', flat=True)
+    strength_exercise_names = StrengthExercise.objects.values_list('name', flat=True)
     strength_exercise_events = StrengthExerciseEvent.objects.filter(date=date)
-    context['exercise_names'] = exercise_names
-    context['workouts'] = strength_exercise_events
+
+    context['title'] = 'Strength - fsweb'
     context['date'] = date
+    context['exercise_names'] = strength_exercise_names
+    context['exercise_events'] = strength_exercise_events
 
     return render(request, 'fitness/strength.html', context)
 
 
+
 def view_cardio(request):
     context = {}
-
     date = datetime.now()
+
+    if request.method == 'POST':
+        cardio_form = CardioForm(request.POST)
+        if cardio_form.is_valid():
+            user = request.user
+            exercise = cardio_form.cleaned_data['exercise']
+            duration = cardio_form.cleaned_data['duration']
+
+            exercise_id = CardioExercise.objects.filter(name=exercise).first()
+            if exercise_id:
+                event = CardioExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration)
+                event.save()
+            else:
+                context['post_error'] = 'invalid exercise'
+        else:
+            print('unhandled error')
+
+        return redirect('fitness:cardio')
+
+
+    cardio_exercise_names = CardioExercise.objects.values_list('name', flat=True)
+    cardio_exercise_events = CardioExerciseEvent.objects.filter(date=date)
+
+    context['title'] = 'Cardio - fsweb'
     context['date'] = date
+    context['exercise_names'] = cardio_exercise_names
+    context['exercise_events'] = cardio_exercise_events
 
     return render(request, 'fitness/cardio.html', context)
 
 
+
 def view_flexibility(request):
     context = {}
-
     date = datetime.now()
+
+    if request.method == 'POST':
+        flexibility_form = FlexibilityForm(request.POST)
+        if flexibility_form.is_valid():
+            user = request.user
+            exercise = flexibility_form.cleaned_data['exercise']
+            duration = flexibility_form.cleaned_data['duration']
+            exercise_id = FlexibilityExercise.objects.filter(name=exercise).first()
+
+            if exercise_id:
+                event = FlexibilityExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration)
+                event.save()
+            else:
+                context['post_error'] = 'invalid exercise'
+        else:
+            print('unhandled error')
+
+        return redirect('fitness:flexibility')
+
+
+    flexibility_exercise_names = FlexibilityExercise.objects.values_list('name', flat=True)
+    flexibility_exercise_events = FlexibilityExerciseEvent.objects.filter(date=date)
+
+    context['title'] = 'Flexibility - fsweb'
     context['date'] = date
+    context['exercise_names'] = flexibility_exercise_names
+    context['exercise_events'] = flexibility_exercise_events
 
     return render(request, 'fitness/flexibility.html', context)
 
 
+
 def view_hangboard_timer(request):
     return render(request, 'fitness/hangboard-timer.html')
-
 
