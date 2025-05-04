@@ -139,8 +139,3 @@ def view_flexibility(request):
 
     return render(request, 'fitness/flexibility.html', context)
 
-
-
-def view_hangboard_timer(request):
-    return render(request, 'fitness/hangboard-timer.html')
-

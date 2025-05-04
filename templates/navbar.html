@@ -1,0 +1,43 @@
+<nav class="navbar">
+    <div class="container">
+        <ul class="nav-left">
+            <li>
+                <a href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="dropdown">
+                <a href="{% url 'fitness:index' %}">Fitness</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'fitness:strength' %}">Strength</a>
+                    <a href="{% url 'fitness:cardio' %}">Cardio</a>
+                    <a href="{% url 'fitness:flexibility' %}">Flexibility</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="{% url 'tools:index' %}">Tools</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'tools:hangboard_timer' %}">Hangboard Timer</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav-right">
+            {% if username %}
+            <li class="dropdown">
+                <a href="#">Profile</a>
+                <div class="dropdown-content">
+                    <form action="{% url 'accounts:logout' %}" method="POST" class="logout-form">
+                        {% csrf_token %}
+                        <input type="submit" value="Log out" class="logout-button">
+                    </form>
+                </div>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'accounts:login' %}">Log In</a>
+            </li>
+            <li>
+                <a href="{% url 'accounts:register' %}">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

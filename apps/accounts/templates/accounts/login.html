@@ -1,24 +1,15 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Login</title>
-        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'accounts/login.css' %}">
-    </head>
+{% extends 'base.html' %}
 
-    <body>
-        <main>
-            Log in.
-            <form method="post">{% csrf_token %}
-                <input name="username" type="text" placeholder="username"><br>
-                <input name="password" type="text" placeholder="password"><br>
-                <button type="submit">Log In</button>
-            </form>
-            Don't have an account? <a href="/accounts/register">Register</a>
-            <br>
-            Forgot your password? Unfortunate.
-        </main>
-    </body>
-</html>
+{% block title %}Login - fsweb{% endblock %}
 
+{% block content %}
+Log in.
+<form method="post">{% csrf_token %}
+    <input name="username" type="text" placeholder="username"><br>
+    <input name="password" type="text" placeholder="password"><br>
+    <button type="submit">Log In</button>
+</form>
+Don't have an account? <a href="/accounts/register">Register</a>
+<br>
+Forgot your password? Unfortunate.
+{% endblock %}

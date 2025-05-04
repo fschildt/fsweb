@@ -1,43 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>fsweb</title>
-        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-    </head>
+{% extends 'base.html' %}
 
-    <body>
-        <header>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="/fitness">Fitness</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <a href="/accounts/login">Log In</a>
-                    </li>
-                    <li>
-                        <a href="/accounts/register">Register</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            Welcome to my website!<br><br>
+{% block title %}Home{% endblock %}
 
-            {% if username %}
-            Logged in as: {{ username }}
-            <form action="/accounts/logout/" method="POST">{% csrf_token %}
-                <input type="submit" value="Log out">
-            </form>
-            <br>
-            {% endif %}
-        </main>
-    </body>
-</html>
+{% block content %}
+    <h1>Welcome to the Home Page</h1>
+{% endblock %}
 

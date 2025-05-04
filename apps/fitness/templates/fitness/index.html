@@ -1,21 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Fitness Tracker</title>
-        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-    </head>
+{% extends 'base.html' %}
 
-    <body>
-        <main>
-            <a href="{% url 'fitness:strength' %}">Strength</a><br>
-            <a href="{% url 'fitness:cardio' %}">Cardio</a><br>
-            <a href="{% url 'fitness:flexibility' %}">Flexibility</a><br>
-            <br>
-            <br>
-            <a href="{% url 'fitness:hangboard_timer' %}">Hangboard Timer</a>
-        </main>
-    </body>
+{% block title %}Fitness - fsweb{% endblock %}
 
-</html>
-
+{% block content %}
+    <h1>Welcome to the Fitness Page</h1>
+{% endblock %}
