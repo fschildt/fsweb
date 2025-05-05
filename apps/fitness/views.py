@@ -4,6 +4,7 @@ from django import forms
 from .models import StrengthExercise, StrengthExerciseEvent
 from .models import CardioExercise, CardioExerciseEvent
 from .models import FlexibilityExercise, FlexibilityExerciseEvent
+from .models import BrainMaterial, BrainEvent
 
 from datetime import datetime
 
@@ -23,6 +24,11 @@ class CardioForm(forms.Form):
 
 class FlexibilityForm(forms.Form):
     exercise = forms.CharField(max_length=100)
+    duration = forms.DurationField()
+
+
+class BrainForm(forms.Form):
+    material = forms.CharField(max_length=64)
     duration = forms.DurationField()
 
 
@@ -116,8 +122,8 @@ def view_flexibility(request):
             user = request.user
             exercise = flexibility_form.cleaned_data['exercise']
             duration = flexibility_form.cleaned_data['duration']
-            exercise_id = FlexibilityExercise.objects.filter(name=exercise).first()
 
+            exercise_id = FlexibilityExercise.objects.filter(name=exercise).first()
             if exercise_id:
                 event = FlexibilityExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration)
                 event.save()
@@ -138,4 +144,40 @@ def view_flexibility(request):
     context['exercise_events'] = flexibility_exercise_events
 
     return render(request, 'fitness/flexibility.html', context)
+
+
+
+def view_brain(request):
+    date = datetime.now()
+
+
+    if request.method == 'POST':
+        brain_form = BrainForm(request.POST)
+        if brain_form.is_valid():
+            user = request.user
+            material = brain_form.cleaned_data['material']
+            duration = brain_form.cleaned_data['duration']
+
+            material_id = BrainMaterial.objects.filter(name=material).first()
+            if material_id:
+                event = BrainEvent(date=date, user=user, material=material_id, duration=duration)
+                event.save()
+            else:
+                print('invalid material')
+        else:
+            print('unhandled error')
+
+        return redirect('fitness:brain')
+
+
+    brain_material_names = BrainMaterial.objects.values_list('name', flat=True)
+    brain_events = BrainEvent.objects.filter(date=date)
+
+    context = {}
+    context['title'] = 'Brain - fsweb'
+    context['date'] = date
+    context['brain_material_names'] = brain_material_names
+    context['brain_events'] = brain_events
+
+    return render(request, 'fitness/brain.html', context)
 
