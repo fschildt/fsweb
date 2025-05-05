@@ -20,7 +20,7 @@
             </li>
         </ul>
         <ul class="nav-right">
-            {% if username %}
+            {% if user.is_authenticated %}
             <li class="dropdown">
                 <a href="#">Profile</a>
                 <div class="dropdown-content">
