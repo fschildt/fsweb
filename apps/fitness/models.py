@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+from decimal import Decimal
+
 
 class StrengthExercise(models.Model):
     name = models.CharField(max_length=64)
@@ -43,12 +45,25 @@ class CardioExerciseEvent(models.Model):
     exercise = models.ForeignKey('CardioExercise', on_delete=models.CASCADE)
     date = models.DateField()
     duration = models.DurationField()
+    distance = models.DecimalField(max_digits=5, decimal_places=1)
 
     class Meta:
         db_table = "cardio_exercise_events"
 
+
+    @property
+    def pace(self):
+        if self.duration and self.distance > 0:
+            duration_seconds = Decimal(str(self.duration.total_seconds()))
+            seconds_per_km = duration_seconds / self.distance
+            minutes_part = int(seconds_per_km // Decimal('60'))
+            seconds_part = int(seconds_per_km % Decimal('60'))
+            return f"{minutes_part}:{seconds_part:02d}"
+        return "N/A"
+
+
     def __str__(self):
-        return f"{self.date}, {self.user.username}, {self.exercise.name}, {self.duration}"
+        return f"{self.date}, {self.user.username}, {self.exercise.name}, {self.duration}, {self.distance}"
 
 
 
@@ -94,6 +109,7 @@ class BrainEvent(models.Model):
 
     class Meta:
         db_table = "brain_events"
+
 
     def __str__(self):
         return f"{self.date}, {self.material}, {self.duration}"

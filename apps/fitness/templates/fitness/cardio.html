@@ -14,6 +14,10 @@
     <input id="duration-input" name="duration" type="text" pattern="^(?:(?:[0-1]\d|2[0-3]):[0-5]\d:[0-5]\d|[0-5]?\d:[0-5]\d)$">
     <br><br>
 
+    <label for"distance-input">Distance</label>
+    <input id="distance-input" name="distance" type="number" min="0" max="10000" step="any">
+    <br><br>
+
     <input type="submit" value="Submit">
 </form>
 
@@ -23,12 +27,16 @@
         <th>Exercise</th>
         <th>Zone</th>
         <th>Duration</th>
+        <th>Distance</th>
+        <th>Pace</th>
     </tr>
     {% for event in exercise_events %}
     <tr>
         <td>{{ event.exercise.name }}</td>
         <td>{{ event.exercise.zone }}</td>
         <td>{{ event.duration }}</td>
+        <td>{{ event.distance }}</td>
+        <td>{{ event.pace }}</td>
     </tr>
     {% endfor %}
 </table> 

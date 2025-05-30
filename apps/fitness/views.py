@@ -20,6 +20,7 @@ class StrengthForm(forms.Form):
 class CardioForm(forms.Form):
     exercise = forms.CharField(max_length=100)
     duration = forms.DurationField()
+    distance = forms.DecimalField(max_value=10000, decimal_places=1)
 
 
 class FlexibilityForm(forms.Form):
@@ -60,7 +61,7 @@ def view_strength(request):
             else:
                 context['post_error'] = 'invalid exercise'
         else:
-            print('unhandled error')
+            print('strength_form is invalid')
 
         return redirect('fitness:strength')
 
@@ -87,15 +88,17 @@ def view_cardio(request):
             user = request.user
             exercise = cardio_form.cleaned_data['exercise']
             duration = cardio_form.cleaned_data['duration']
+            distance = cardio_form.cleaned_data['distance']
 
             exercise_id = CardioExercise.objects.filter(name=exercise).first()
             if exercise_id:
-                event = CardioExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration)
+                event = CardioExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration, distance=distance)
                 event.save()
+                print('saved')
             else:
                 context['post_error'] = 'invalid exercise'
         else:
-            print('unhandled error')
+            print('cardio_form is invalid')
 
         return redirect('fitness:cardio')
 
@@ -130,7 +133,7 @@ def view_flexibility(request):
             else:
                 context['post_error'] = 'invalid exercise'
         else:
-            print('unhandled error')
+            print('flexibility_form is invalid')
 
         return redirect('fitness:flexibility')
 
@@ -165,7 +168,7 @@ def view_brain(request):
             else:
                 print('invalid material')
         else:
-            print('unhandled error')
+            print('brain_form is invalid')
 
         return redirect('fitness:brain')
 
