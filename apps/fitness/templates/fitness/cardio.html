@@ -30,7 +30,7 @@
         <th>Distance</th>
         <th>Pace</th>
     </tr>
-    {% for event in exercise_events %}
+    {% for event in cardio_events %}
     <tr>
         <td>{{ event.exercise.name }}</td>
         <td>{{ event.exercise.zone }}</td>
@@ -42,8 +42,8 @@
 </table> 
 
 <datalist id="exercise-list">
-    {% for exercise_name in exercise_names %}
-    <option value="{{ exercise_name }}">
+    {% for exercise in cardio_exercises %}
+    <option value="{{ exercise }}">
     {% endfor %}
 </datalist>
 {% endblock %}

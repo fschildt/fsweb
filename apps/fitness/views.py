@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django import forms
 
-from .models import StrengthExercise, StrengthExerciseEvent
-from .models import CardioExercise, CardioExerciseEvent
-from .models import FlexibilityExercise, FlexibilityExerciseEvent
-from .models import BrainMaterial, BrainEvent
+from .models import StrengthExercise, StrengthEvent
+from .models import CardioExercise, CardioEvent
+from .models import FlexibilityExercise, FlexibilityEvent
+from .models import BrainExercise, BrainEvent
 
 from datetime import datetime
 
@@ -29,7 +29,7 @@ class FlexibilityForm(forms.Form):
 
 
 class BrainForm(forms.Form):
-    material = forms.CharField(max_length=64)
+    exercise = forms.CharField(max_length=64)
     duration = forms.DurationField()
 
 
@@ -56,7 +56,7 @@ def view_strength(request):
             strength_exercise_id = StrengthExercise.objects.filter(name=exercise).first()
             if strength_exercise_id:
                 for _ in range(sets):
-                    strength_exercise_event = StrengthExerciseEvent(user=user, exercise=strength_exercise_id, date=date, weight=weight, reps=reps)
+                    strength_exercise_event = StrengthEvent(user=user, exercise=strength_exercise_id, date=date, weight=weight, reps=reps)
                     strength_exercise_event.save()
             else:
                 context['post_error'] = 'invalid exercise'
@@ -66,13 +66,13 @@ def view_strength(request):
         return redirect('fitness:strength')
 
 
-    strength_exercise_names = StrengthExercise.objects.values_list('name', flat=True)
-    strength_exercise_events = StrengthExerciseEvent.objects.filter(date=date)
+    strength_exercises = StrengthExercise.objects.values_list('name', flat=True)
+    strength_events = StrengthEvent.objects.filter(date=date)
 
     context['title'] = 'Strength - fsweb'
     context['date'] = date
-    context['exercise_names'] = strength_exercise_names
-    context['exercise_events'] = strength_exercise_events
+    context['strength_exercises'] = strength_exercises
+    context['strength_events'] = strength_events
 
     return render(request, 'fitness/strength.html', context)
 
@@ -92,7 +92,7 @@ def view_cardio(request):
 
             exercise_id = CardioExercise.objects.filter(name=exercise).first()
             if exercise_id:
-                event = CardioExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration, distance=distance)
+                event = CardioEvent(date=date, user=user, exercise=exercise_id, duration=duration, distance=distance)
                 event.save()
                 print('saved')
             else:
@@ -103,13 +103,13 @@ def view_cardio(request):
         return redirect('fitness:cardio')
 
 
-    cardio_exercise_names = CardioExercise.objects.values_list('name', flat=True)
-    cardio_exercise_events = CardioExerciseEvent.objects.filter(date=date)
+    cardio_exercises = CardioExercise.objects.values_list('name', flat=True)
+    cardio_events = CardioEvent.objects.filter(date=date)
 
     context['title'] = 'Cardio - fsweb'
     context['date'] = date
-    context['exercise_names'] = cardio_exercise_names
-    context['exercise_events'] = cardio_exercise_events
+    context['cardio_exercises'] = cardio_exercises
+    context['cardio_events'] = cardio_events
 
     return render(request, 'fitness/cardio.html', context)
 
@@ -128,7 +128,7 @@ def view_flexibility(request):
 
             exercise_id = FlexibilityExercise.objects.filter(name=exercise).first()
             if exercise_id:
-                event = FlexibilityExerciseEvent(date=date, user=user, exercise=exercise_id, duration=duration)
+                event = FlexibilityEvent(date=date, user=user, exercise=exercise_id, duration=duration)
                 event.save()
             else:
                 context['post_error'] = 'invalid exercise'
@@ -138,13 +138,13 @@ def view_flexibility(request):
         return redirect('fitness:flexibility')
 
 
-    flexibility_exercise_names = FlexibilityExercise.objects.values_list('name', flat=True)
-    flexibility_exercise_events = FlexibilityExerciseEvent.objects.filter(date=date)
+    flexibility_exercises = FlexibilityExercise.objects.values_list('name', flat=True)
+    flexibility_events = FlexibilityEvent.objects.filter(date=date)
 
     context['title'] = 'Flexibility - fsweb'
     context['date'] = date
-    context['exercise_names'] = flexibility_exercise_names
-    context['exercise_events'] = flexibility_exercise_events
+    context['flexibility_exercises'] = flexibility_exercises
+    context['flexibility_events'] = flexibility_events
 
     return render(request, 'fitness/flexibility.html', context)
 
@@ -158,28 +158,28 @@ def view_brain(request):
         brain_form = BrainForm(request.POST)
         if brain_form.is_valid():
             user = request.user
-            material = brain_form.cleaned_data['material']
+            exercise = brain_form.cleaned_data['exercise']
             duration = brain_form.cleaned_data['duration']
 
-            material_id = BrainMaterial.objects.filter(name=material).first()
-            if material_id:
-                event = BrainEvent(date=date, user=user, material=material_id, duration=duration)
+            exercise_id = BrainExercise.objects.filter(name=exercise).first()
+            if exercise_id:
+                event = BrainEvent(date=date, user=user, exercise=exercise_id, duration=duration)
                 event.save()
             else:
-                print('invalid material')
+                print('invalid exercise')
         else:
             print('brain_form is invalid')
 
         return redirect('fitness:brain')
 
 
-    brain_material_names = BrainMaterial.objects.values_list('name', flat=True)
+    brain_exercises = BrainExercise.objects.values_list('name', flat=True)
     brain_events = BrainEvent.objects.filter(date=date)
 
     context = {}
     context['title'] = 'Brain - fsweb'
     context['date'] = date
-    context['brain_material_names'] = brain_material_names
+    context['brain_exercises'] = brain_exercises
     context['brain_events'] = brain_events
 
     return render(request, 'fitness/brain.html', context)

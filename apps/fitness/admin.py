@@ -1,26 +1,26 @@
 from django.contrib import admin
 
 from .models import StrengthExercise
-from .models import StrengthExerciseEvent
+from .models import StrengthEvent
 
 from .models import FlexibilityExercise
-from .models import FlexibilityExerciseEvent
+from .models import FlexibilityEvent
 
 from .models import CardioExercise
-from .models import CardioExerciseEvent
+from .models import CardioEvent
 
-from .models import BrainMaterial
+from .models import BrainExercise
 from .models import BrainEvent
 
 
 admin.site.register(StrengthExercise)
-admin.site.register(StrengthExerciseEvent)
+admin.site.register(StrengthEvent)
 
 admin.site.register(FlexibilityExercise)
-admin.site.register(FlexibilityExerciseEvent)
+admin.site.register(FlexibilityEvent)
 
 admin.site.register(CardioExercise)
-admin.site.register(CardioExerciseEvent)
+admin.site.register(CardioEvent)
 
-admin.site.register(BrainMaterial)
+admin.site.register(BrainExercise)
 admin.site.register(BrainEvent)

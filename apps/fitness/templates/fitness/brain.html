@@ -6,8 +6,8 @@
 <h2>{{ date|date:"Y-m-d" }}</h2>
 <form action="{% url 'fitness:brain' %}" method="post">
     {% csrf_token %}
-    <label for="material-input">Material</label>
-    <input id="material-input" name="material" type="search" list="materials-list" autocomplete="on">
+    <label for="exercise-input">Exercise</label>
+    <input id="exercise-input" name="exercise" type="search" list="exercise-list" autocomplete="on">
     <br><br>
 
     <label for"duration-input">Duration</label>
@@ -20,20 +20,20 @@
 <h2>Summary</h2>
 <table>
     <tr>
-        <th>Material</th>
+        <th>Exercise</th>
         <th>Duration</th>
     </tr>
     {% for event in brain_events %}
     <tr>
-        <td>{{ event.material.name }}</td>
+        <td>{{ event.exercise.name }}</td>
         <td>{{ event.duration }}</td>
     </tr>
     {% endfor %}
 </table> 
 
-<datalist id="materials-list">
-    {% for name in brain_material_names %}
-    <option value="{{ name }}">
+<datalist id="exercise-list">
+    {% for exercise in brain_exercises %}
+    <option value="{{ exercise }}">
     {% endfor %}
 </datalist>
 {% endblock %}

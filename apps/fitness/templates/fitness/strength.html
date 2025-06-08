@@ -32,7 +32,7 @@
         <th>Weight</th>
         <th>Repetitions</th>
     </tr>
-    {% for event in exercise_events %}
+    {% for event in strength_events %}
     <tr>
         <td>{{ event.exercise }}</td>
         <td>{{ event.weight }}</td>
@@ -42,8 +42,8 @@
 </table> 
 
 <datalist id="exercise-list">
-    {% for exercise_name in exercise_names %}
-    <option value="{{ exercise_name }}">
+    {% for exercise in strength_exercises %}
+    <option value="{{ exercise }}">
     {% endfor %}
 </datalist>
 {% endblock %}
