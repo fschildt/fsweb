@@ -1,0 +1,99 @@
+.strength-menu-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.strength-table-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto; /* enable horizontal scrolling */
+    margin: 20px 0;   /* add vertical spacing */
+}
+
+.strength-table {
+    width: 60%;
+    max-width: 800px;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #2a2a2a;                /* dark gray table background */
+    color: #e0e0e0;                           /* light text for readability */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* darker shadow */
+}
+
+.strength-tablestrength-table th,
+.strength-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.strength-table th {
+    background-color: #1c2526; /* darker header background */
+    font-weight: bold;
+    text-align: center;        /* center header text */
+}
+
+/* date */
+.strength-table th:nth-child(1),
+.strength-table td:nth-child(1) {
+    width: 120px;
+}
+
+/* exercise */
+.strength-table th:nth-child(2),
+.strength-table td:nth-child(2) {
+    width: 200px;
+}
+
+/* weight */
+.strength-table th:nth-child(3),
+.strength-table td:nth-child(3) {
+    width: 100px;
+}
+
+/* reps */
+.strength-table th:nth-child(4),
+.strength-table td:nth-child(4) {
+    width: 100px;
+}
+
+/* actions */
+.strength-table th:nth-child(5),
+.strength-table td:nth-child(5) {
+    width: 50px;
+}
+
+/* hover effect for rows */
+.fitness-table tr:hover {
+    background-color: #333; /* slightly lighter */
+}
+
+.edit-btn, .delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+
+.edit-btn {
+    background-color: #1e90ff; /* blue */
+    margin-right: 5px;
+}
+
+.edit-btn:hover {
+    background-color: #104e8b; /* darker blue */
+}
+
+.delete-btn {
+    background-color: #dc143c; /* crimson */
+}
+
+.delete-btn:hover {
+    background-color: #8b0000; /* darker crimson */
+}
+

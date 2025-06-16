@@ -18,7 +18,7 @@ class StrengthEvent(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     exercise = models.ForeignKey('StrengthExercise', on_delete=models.CASCADE)
     date = models.DateField()
-    weight = models.DecimalField(max_digits=5, decimal_places=1)
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
     reps = models.PositiveIntegerField()
 
     class Meta:
@@ -45,7 +45,7 @@ class CardioEvent(models.Model):
     exercise = models.ForeignKey('CardioExercise', on_delete=models.CASCADE)
     date = models.DateField()
     duration = models.DurationField()
-    distance = models.DecimalField(max_digits=5, decimal_places=1)
+    distance = models.DecimalField(max_digits=5, decimal_places=2)
 
     class Meta:
         db_table = "cardio_events"

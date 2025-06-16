@@ -1,49 +1,50 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block morelinks %}
+<link rel="stylesheet" type="text/css" href="{% static 'fitness/css/strength.css' %}">
+{% endblock %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h2>{{ date|date:"Y-m-d" }}</h2>
-<form action="{% url 'fitness:strength' %}" method="post">
-    {% csrf_token %}
-    <label for="exercise-input">Exercise</label>
-    <input id="exercise-input" name="exercise" type="search" list="exercise-list" autocomplete="on">
-    <br><br>
 
-    <label for"weight-input">Weight (kg)</label>
-    <input id="weight-input" name="weight" type="number" min="0" max="999" step="any">
-    <br><br>
-
-    <label for"reps-input">Repetitions</label>
-    <input id="reps-input" name="reps" type="number" min="0" max="99999">
-    <br><br>
-
-    <label for"sets-input">Sets</label>
-    <input id="sets-input" name="sets" type="number" min="0" max="99999">
-    <br><br>
-
-    <input type="submit" value="Submit">
-</form>
-
+<div class="strength-menu-container">
 <h2>Summary</h2>
-<table>
-    <tr>
-        <th>Exercise</th>
-        <th>Weight</th>
-        <th>Repetitions</th>
-    </tr>
-    {% for event in strength_events %}
-    <tr>
-        <td>{{ event.exercise }}</td>
-        <td>{{ event.weight }}</td>
-        <td>{{ event.reps }}</td>
-    </tr>
-    {% endfor %}
-</table> 
+<h2><a href="{% url 'fitness:strength_add' %}">Add Event</a></h2>
+</div>
 
-<datalist id="exercise-list">
-    {% for exercise in strength_exercises %}
-    <option value="{{ exercise }}">
-    {% endfor %}
-</datalist>
+<div class="strength-table-container">
+    <table class="strength-table">
+        <tr>
+            <th>Date</th>
+            <th>Exercise</th>
+            <th>Weight</th>
+            <th>Repetitions</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for event in strength_events %}
+        <tr>
+            <td>{{ event.date|date:"Y-m-d" }}</td>
+            <td>{{ event.exercise }}</td>
+            <td>{{ event.weight }}</td>
+            <td>{{ event.reps }}</td>
+            <td>
+                <form action="{% url 'fitness:strength_edit' event.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="edit-btn">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form action="{% url 'fitness:strength_delete' event.id %}" method="POST" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table> 
+</div>
 {% endblock %}
+

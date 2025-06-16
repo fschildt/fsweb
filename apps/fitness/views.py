@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django import forms
 
 from .models import StrengthExercise, StrengthEvent
@@ -20,7 +20,7 @@ class StrengthForm(forms.Form):
 class CardioForm(forms.Form):
     exercise = forms.CharField(max_length=100)
     duration = forms.DurationField()
-    distance = forms.DecimalField(max_value=10000, decimal_places=1)
+    distance = forms.DecimalField(max_value=10000, decimal_places=2)
 
 
 class FlexibilityForm(forms.Form):
@@ -39,8 +39,21 @@ def view_index(request):
     return render(request, 'fitness/index.html', context)
 
 
-
 def view_strength(request):
+    context = {}
+    date = datetime.now()
+
+    strength_events = StrengthEvent.objects.all().order_by('-date', '-id')
+
+    context['title'] = 'Add Strength - fsweb'
+    context['date'] = date
+    context['strength_events'] = strength_events
+
+    print('viewing strength_edit')
+    return render(request, 'fitness/strength.html', context)
+
+
+def view_strength_add(request):
     context = {}
     date = datetime.now()
 
@@ -65,17 +78,33 @@ def view_strength(request):
 
         return redirect('fitness:strength')
 
-
     strength_exercises = StrengthExercise.objects.values_list('name', flat=True)
-    strength_events = StrengthEvent.objects.filter(date=date)
 
-    context['title'] = 'Strength - fsweb'
+    context['title'] = 'Add Strength - fsweb'
     context['date'] = date
     context['strength_exercises'] = strength_exercises
-    context['strength_events'] = strength_events
 
-    return render(request, 'fitness/strength.html', context)
+    return render(request, 'fitness/strength_add.html', context)
 
+
+def view_strength_delete(request, id):
+    context = {}
+    date = datetime.now()
+
+    event = get_object_or_404(StrengthEvent, id=id)
+    if request.method == 'POST':
+        event.delete()
+        return redirect('fitness:strength')
+    else:
+        # Todo: error message
+        return redirect('fitness:strength')
+
+
+def view_strength_edit(request, id):
+    context = {}
+    date = datetime.now()
+    print('viewing strength_edit')
+    return redirect('fitness:strength')
 
 
 def view_cardio(request):
